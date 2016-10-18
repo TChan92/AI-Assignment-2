@@ -5,11 +5,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class Search {
+public class CSPSearch {
 
 	CSP csp;
 	
-	public Search(CSP csp) { this.csp = csp; }
+	public CSPSearch(CSP csp) { this.csp = csp; }
 	
 	//returns an assignment
 	public Map<Object, Object> BacktrackingSearch() {

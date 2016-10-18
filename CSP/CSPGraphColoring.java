@@ -33,7 +33,7 @@ public class CSPGraphColoring extends CSP {
 		for(Object[] p : pairs)
 			csp.addBidirectionalArc(p[0], p[1]);
 		
-		Search search = new Search(csp);
-		System.out.println(search.BacktrackingSearch());
+		CSPSearch CSPSearch = new CSPSearch(csp);
+		System.out.println(CSPSearch.BacktrackingSearch());
 	}
 }

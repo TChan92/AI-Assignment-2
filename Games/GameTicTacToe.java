@@ -124,7 +124,7 @@ public class GameTicTacToe extends Game {
                   int pos = Integer.parseInt( in.readLine() );
             	  
                   nextState = new StateTicTacToe((StateTicTacToe)game.currentState);
-                  nextState.player = 1;
+                  nextState.player = 0;
                   nextState.board[pos] = 'X';
                   System.out.println("Human: \n" + nextState);
                   break;
@@ -132,14 +132,12 @@ public class GameTicTacToe extends Game {
               case 0: //Computer
             	  
             	  nextState = (StateTicTacToe)search.bestSuccessorState(depth);
-            	  nextState.player = 0;
+				  nextState.player = 1;
             	  System.out.println("Computer: \n" + nextState);
                   break;
             }
                         
             game.currentState = nextState;
-            //change player
-            game.currentState.player = (game.currentState.player==0 ? 1 : 0);
             
             //Who wins?
             if ( game.isWinState(game.currentState) ) {
