@@ -27,21 +27,35 @@ public class CSPZebra extends CSP{
 		// Check to see if there is arc between X and Y
 		if (!C.get(X).contains(Y)) return true;
 
-		// Englishman lives in red house
 		if (X.equals("englishman") && Y.equals("red") && !x.equals(y)) return false;
 		if (X.equals("spaniard") && Y.equals("dog") && !x.equals(y)) return false;
 		if (X.equals("coffee") && Y.equals("green") && !x.equals(y)) return false;
 		if (X.equals("ukranian") && Y.equals("tea") && !x.equals(y)) return false;
-		if (X.equals("green") && Y.equals("ivory")  && (Integer) x + 1 != (Integer) y) return false;
+		if (X.equals("green") && Y.equals("ivory")  && (Integer) x != (Integer) y + 1) {return false;}
+		if (X.equals("ivory") && Y.equals("green")  && (Integer) x + 1 != (Integer) y) {return false;}
 		if (X.equals("old-gold") && Y.equals("snails") && !x.equals(y)) return false;
 		if (X.equals("kools") && Y.equals("yellow") && !x.equals(y)) return false;
+		if (X.equals("milk") && (Integer) x != 3) return false;
+		if (X.equals("norwegian") && (Integer) x != 1) return false;
+		if (X.equals("chesterfield") && Y.equals("fox") && (Math.abs((Integer) x - (Integer) y) != 1)) return false;
+		if (X.equals("kools") && Y.equals("horse") && (Math.abs((Integer) x - (Integer) y) != 1)) return false;
 		if (X.equals("lucky-strike") && Y.equals("orange-juice") && !x.equals(y)) return false;
 		if (X.equals("japanese") && Y.equals("parliament") && !x.equals(y)) return false;
+		if (X.equals("norwegian") && Y.equals("blue") && (Math.abs((Integer) x - (Integer) y) != 1)) return false;
+		if (X.equals("blue") && Y.equals("norwegian") && (Math.abs((Integer) x - (Integer) y) != 1)) return false;
 
 		// Uniqueness Constraints
 		if (varCol.contains(X) && varCol.contains(Y) && !X.equals(Y) && x.equals(y)) return false;
+		if (varDri.contains(X) && varDri.contains(Y) && !X.equals(Y) && x.equals(y)) return false;
+		if (varNat.contains(X) && varNat.contains(Y) && !X.equals(Y) && x.equals(y)) return false;
+		if (varPet.contains(X) && varPet.contains(Y) && !X.equals(Y) && x.equals(y)) return false;
+		if (varCig.contains(X) && varCig.contains(Y) && !X.equals(Y) && x.equals(y)) return false;
 
 		return true;
+	}
+
+	private static void AddDomain(CSPZebra csp, Set<Object> set) {
+		for(Object X : set) csp.addDomain(X, dom);
 	}
 
 	private static void AddUniquenessConstraint(CSPZebra csp, Set<Object> set) {
@@ -55,26 +69,28 @@ public class CSPZebra extends CSP{
 	public static void main(String[] args) throws Exception {
 		CSPZebra csp = new CSPZebra();
 
-		for(Object X : varCol) csp.addDomain(X, dom);
-		for(Object X : varDri) csp.addDomain(X, dom);
-		for(Object X : varNat) csp.addDomain(X, dom);
-		for(Object X : varPet) csp.addDomain(X, dom);
-		for(Object X : varCig) csp.addDomain(X, dom);
+		AddDomain(csp, varCol);
+
+		AddDomain(csp, varDri);
+
+		AddDomain(csp, varNat);
+
+		AddDomain(csp, varPet);
+
+		AddDomain(csp, varCig);
 
 		csp.addBidirectionalArc("englishman", "red");
 		csp.addBidirectionalArc("spaniard", "dog");
 		csp.addBidirectionalArc("coffee", "green");
 		csp.addBidirectionalArc("ukranian", "tea");
-		// Green house is directly to the right of the ivory house
+		csp.addBidirectionalArc("green", "ivory");
 		csp.addBidirectionalArc("old-gold", "snails");
 		csp.addBidirectionalArc("kools", "yellow");
-		// Milk is being drunk in the middle house
-		// Norwegian lives in the first house to the left
-		// Chesterfield smoker lives next to the fox owner
-		// Kools are smoked in the house next to the house where the horse is kept
+		csp.addBidirectionalArc("chesterfield", "fox");
+		csp.addBidirectionalArc("kools", "horse");
 		csp.addBidirectionalArc("lucky-strike", "orange-juice");
 		csp.addBidirectionalArc("japanese", "parliament");
-		// Norwegian lives next to the blue house
+		csp.addBidirectionalArc("norwegian", "blue");
 
 
 		AddUniquenessConstraint(csp, varCol);
