@@ -1,4 +1,7 @@
 # AI-Assignment-2
+Contributors:
+Tim Chan
+Callum Colvine
 
 Question 1:
 Run the GameNim.java
